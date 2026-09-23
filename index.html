@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matthew & Brenda are having a baby</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Rye&family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fffdf9;
+    --line:#c9c9c9;
+    --ink:#1a1a1a;
+    --gold:#8a6a1f;
+    --gold-bg:#fbf3e2;
+    --blush:#f0a9a5;
+    --sky:#a9c9e8;
+    --tan:#d9c3a0;
+    --card-bg:#e7e4dc;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Playfair Display', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+  .divider{border:none;border-top:1px solid var(--line);margin:0;}
+
+  /* HERO */
+  .hero{position:relative;padding:70px 32px 60px;overflow:hidden;}
+  .hero-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 220px;align-items:center;gap:24px;}
+  .plane-doodle{width:220px;height:auto;margin-bottom:18px;}
+  .hero h1{
+    font-family:'Rye', serif;
+    font-weight:400;
+    font-size:clamp(1.9rem, 4.2vw, 2.7rem);
+    margin:0 0 6px;
+    line-height:1.2;
+    letter-spacing:.5px;
+  }
+  .hero h1 span{
+    display:block;font-family:'Mrs Saint Delafield', cursive;
+    font-size:clamp(3.1rem, 7vw, 5rem);margin-top:10px;line-height:1;
+  }
+  .passport{
+    width:190px;height:260px;background:#1c2c52;border-radius:10px;
+    box-shadow:0 18px 34px rgba(0,0,0,.18);
+    transform:rotate(6deg);
+    position:relative;justify-self:end;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .passport::after{
+    content:"";position:absolute;right:-26px;top:-10px;width:70px;height:290px;
+    background:repeating-linear-gradient(180deg,#eee 0 14px,#fff 14px 28px);
+    border-radius:6px;transform:rotate(-4deg);z-index:-1;
+  }
+  .passport svg{width:78px;height:78px;}
+
+  /* SECTION SPACING */
+  section{padding:56px 0;}
+  .center{text-align:center;}
+
+  /* TIMELINE */
+  .hearts-row{display:flex;justify-content:space-around;max-width:760px;margin:0 auto 34px;padding-top:0;}
+  .heart-hang{width:18px;height:18px;position:relative;}
+  .heart-hang::before{content:"";position:absolute;top:-22px;left:50%;width:1px;height:22px;background:var(--line);}
+  .heart-hang svg{width:18px;height:18px;fill:#f2d98b;}
+
+  .polaroids{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1000px;margin:0 auto;
+  }
+  .polaroid{
+    background:var(--card-bg);padding:10px 10px 14px;border-radius:2px;
+    box-shadow:0 6px 14px rgba(0,0,0,.08);
+  }
+  .polaroid .photo{
+    background:#111;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+    color:#888;font-family:'Playfair Display';font-size:.75rem;font-style:italic;
+    border:1px solid #333;
+  }
+  .polaroid .photo.route{
+    background:#fdfdfb;border:1px solid #ddd;color:var(--ink);position:relative;
+  }
+  .route svg{width:70%;height:70%;}
+  .caption{
+    display:flex;align-items:center;justify-content:space-between;
+    font-family:'Mrs Saint Delafield', cursive;font-weight:400;font-size:1.6rem;margin-top:8px;
+  }
+  .caption svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:1.6;}
+
+  /* REGISTRY */
+  .registry-row{display:flex;align-items:center;justify-content:center;gap:36px;flex-wrap:wrap;}
+  .registry-text h2{
+    font-family:'Mrs Saint Delafield', cursive;font-size:3.6rem;margin:0 0 10px;font-weight:400;
+  }
+  .registry-text p{font-size:1.3rem;margin:0;font-family:'Caveat', cursive;font-weight:500;}
+  .registry-text a{color:var(--ink);}
+  .balloons{width:110px;height:auto;}
+
+  /* GENDER VOTE */
+  .vote-card{
+    max-width:520px;margin:0 auto;background:var(--gold-bg);border:1px solid #b89a4e;
+    border-radius:10px;padding:42px 40px;text-align:center;
+  }
+  .vote-card h3{
+    font-family:'Rye', serif;font-weight:400;color:var(--gold);
+    font-size:1.5rem;margin:0 0 26px;letter-spacing:.5px;
+  }
+  .vote-option{
+    display:block;width:100%;text-align:left;padding:14px 18px;margin-bottom:14px;
+    background:#e9e2d3;border:1px solid #cdbf9c;border-radius:6px;
+    font-family:'Rye', serif;font-size:1rem;color:#6b5b33;
+    cursor:pointer;transition:background .15s ease;
+  }
+  .vote-option input{margin-right:10px;accent-color:#8a6a1f;}
+  .vote-option:hover{background:#e2d8c1;}
+  .vote-btn{
+    width:100%;padding:14px;margin-top:4px;border:none;border-radius:24px;
+    background:#d29a76;color:#fff;font-family:'Rye',serif;font-size:1rem;font-weight:400;
+    cursor:pointer;letter-spacing:.5px;
+  }
+  .vote-btn:hover{background:#c78a63;}
+  .vote-note{font-size:.75rem;color:#8a7a55;margin-top:10px;font-family:'Playfair Display';}
+  .tally{margin-top:18px;font-family:'Caveat',cursive;font-size:1.15rem;color:#6b5b33;}
+
+  footer{padding:30px 0 50px;text-align:center;font-size:.8rem;color:#999;}
+
+  @media (max-width:720px){
+    .hero-grid{grid-template-columns:1fr;text-align:center;}
+    .passport{justify-self:center;margin-top:24px;}
+    .polaroids{grid-template-columns:1fr 1fr;}
+    .registry-row{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <svg class="plane-doodle" viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 150c30 10 45-6 40-22-4-14-24-10-22 4 3 18 34 24 55 4l70-70" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+          <path d="M150 66l24-24 10 4-16 22 18-2 8 8-26 8-2 18-8-8 2-16-22 16z" fill="#111"/>
+        </svg>
+        <h1>Matthew &amp; Brenda<span>are having a baby</span></h1>
+      </div>
+      <div class="passport">
+        <svg viewBox="0 0 100 100"><ellipse cx="50" cy="60" rx="26" ry="24" fill="#d9b27c"/><circle cx="34" cy="34" r="13" fill="#d9b27c"/><circle cx="66" cy="34" r="13" fill="#d9b27c"/><circle cx="34" cy="34" r="6" fill="#c89a63"/><circle cx="66" cy="34" r="6" fill="#c89a63"/><circle cx="42" cy="55" r="3" fill="#3a2a17"/><circle cx="58" cy="55" r="3" fill="#3a2a17"/><path d="M44 66q6 5 12 0" stroke="#3a2a17" stroke-width="2" fill="none"/><rect x="42" y="72" width="16" height="10" rx="4" fill="#6f9bd6"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="wrap">
+      <div class="hearts-row">
+        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
+        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
+        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
+        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
+      </div>
+
+      <div class="polaroids">
+        <div class="polaroid">
+          <div class="photo">ultrasound photo</div>
+          <div class="caption">8 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+        </div>
+        <div class="polaroid">
+          <div class="photo route">
+            <svg viewBox="0 0 120 120"><path d="M15 90c25-40 55 5 30 25" stroke="#111" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/><path d="M45 115l6-3-1 7z" fill="#111"/><circle cx="60" cy="60" r="34" fill="none" stroke="#111" stroke-width="1"/><text x="60" y="64" font-family="Rye" font-size="11" text-anchor="middle" fill="#111">En Route</text></svg>
+          </div>
+          <div class="caption">12 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+        </div>
+        <div class="polaroid">
+          <div class="photo route">
+            <svg viewBox="0 0 120 120"><path d="M15 90c25-40 55 5 30 25" stroke="#111" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/><path d="M45 115l6-3-1 7z" fill="#111"/><circle cx="60" cy="60" r="34" fill="none" stroke="#111" stroke-width="1"/><text x="60" y="64" font-family="Rye" font-size="11" text-anchor="middle" fill="#111">En Route</text></svg>
+          </div>
+          <div class="caption">16 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+        </div>
+        <div class="polaroid">
+          <div class="photo route">
+            <svg viewBox="0 0 120 120"><path d="M15 90c25-40 55 5 30 25" stroke="#111" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/><path d="M45 115l6-3-1 7z" fill="#111"/><circle cx="60" cy="60" r="34" fill="none" stroke="#111" stroke-width="1"/><text x="60" y="64" font-family="Rye" font-size="11" text-anchor="middle" fill="#111">En Route</text></svg>
+          </div>
+          <div class="caption">20 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="wrap registry-row">
+      <div class="registry-text">
+        <h2>Registry</h2>
+        <p>Head to <a href="#" target="_blank" rel="noopener">Zola Baby</a> to purchase gifts.</p>
+      </div>
+      <svg class="balloons" viewBox="0 0 120 200" fill="none">
+        <ellipse cx="45" cy="45" rx="34" ry="40" fill="#f0a9a5"/>
+        <path d="M45 85l-4 20" stroke="#d9c3a0" stroke-width="1.5"/>
+        <ellipse cx="80" cy="35" rx="26" ry="30" fill="#a9c9e8"/>
+        <path d="M80 65l4 20" stroke="#d9c3a0" stroke-width="1.5"/>
+        <path d="M41 105c6 10-6 14 0 24s-6 14 2 26" stroke="#d9c3a0" stroke-width="1.5" fill="none"/>
+        <path d="M84 85c6 10-6 14 0 24s-6 14 2 26" stroke="#d9c3a0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="wrap">
+      <div class="vote-card">
+        <h3>Guess the Baby's Gender!</h3>
+        <form id="voteForm">
+          <label class="vote-option"><input type="radio" name="guess" value="Boy" required>Boy</label>
+          <label class="vote-option"><input type="radio" name="guess" value="Girl">Girl</label>
+          <button type="submit" class="vote-btn">Vote</button>
+        </form>
+        <p class="vote-note">Votes are saved on this device only</p>
+        <p class="tally" id="tally"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Matthew &amp; Brenda are having a baby 💙🤍</footer>
+
+<script>
+  const form = document.getElementById('voteForm');
+  const tally = document.getElementById('tally');
+  function counts(){
+    return JSON.parse(localStorage.getItem('babyVotes') || '{"Boy":0,"Girl":0}');
+  }
+  function render(){
+    const c = counts();
+    tally.textContent = `Boy: ${c.Boy}  ·  Girl: ${c.Girl}`;
+  }
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const choice = form.guess.value;
+    if(!choice) return;
+    const c = counts();
+    c[choice]++;
+    localStorage.setItem('babyVotes', JSON.stringify(c));
+    render();
+  });
+  render();
+</script>
+</body>
+</html>
