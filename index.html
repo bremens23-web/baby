@@ -31,6 +31,7 @@
 
   /* HERO */
   .hero{padding:40px 32px;}
+  .hero-grid{max-width:1100px;margin:0 auto;}
   .banner{width:100%;height:auto;display:block;}
 
   /* SECTION SPACING */
@@ -91,6 +92,9 @@
   }
   .vote-option input{margin-right:10px;accent-color:#8a6a1f;}
   .vote-option:hover{background:#e2d8c1;}
+  .live-count{float:right;font-family:'Playfair Display';font-size:.85rem;color:#a08a55;}
+  .vote-option input:disabled{accent-color:#c9bfa0;}
+  .vote-option.disabled{opacity:.7;cursor:default;}
   .vote-btn{
     width:100%;padding:14px;margin-top:4px;border:none;border-radius:24px;
     background:#d29a76;color:#fff;font-family:'Rye',serif;font-size:1rem;font-weight:400;
@@ -180,38 +184,73 @@
       <div class="vote-card">
         <h3>Guess the Baby's Gender!</h3>
         <form id="voteForm">
-          <label class="vote-option"><input type="radio" name="guess" value="Boy" required>Boy</label>
-          <label class="vote-option"><input type="radio" name="guess" value="Girl">Girl</label>
-          <button type="submit" class="vote-btn">Vote</button>
+          <label class="vote-option"><input type="radio" name="guess" value="boy" required>Boy <span class="live-count" id="boyCount">–</span></label>
+          <label class="vote-option"><input type="radio" name="guess" value="girl">Girl <span class="live-count" id="girlCount">–</span></label>
+          <button type="submit" class="vote-btn" id="voteBtn">Vote</button>
         </form>
-        <p class="vote-note">Votes are saved on this device only</p>
-        <p class="tally" id="tally"></p>
+        <p class="vote-note" id="voteNote">Results update live for everyone</p>
       </div>
     </div>
   </section>
 
   <footer>Matthew &amp; Brenda are having a baby 💙🤍</footer>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC6Wzdpm9wKfjTroLa7yyUnshGcx1v_SIU",
+    authDomain: "voteforbaby.firebaseapp.com",
+    databaseURL: "https://voteforbaby-default-rtdb.firebaseio.com/",
+    projectId: "voteforbaby"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const boyRef = ref(db, 'votes/boy');
+  const girlRef = ref(db, 'votes/girl');
+
   const form = document.getElementById('voteForm');
-  const tally = document.getElementById('tally');
-  function counts(){
-    return JSON.parse(localStorage.getItem('babyVotes') || '{"Boy":0,"Girl":0}');
-  }
-  function render(){
-    const c = counts();
-    tally.textContent = `Boy: ${c.Boy}  ·  Girl: ${c.Girl}`;
-  }
-  form.addEventListener('submit', e=>{
-    e.preventDefault();
-    const choice = form.guess.value;
-    if(!choice) return;
-    const c = counts();
-    c[choice]++;
-    localStorage.setItem('babyVotes', JSON.stringify(c));
-    render();
+  const voteBtn = document.getElementById('voteBtn');
+  const voteNote = document.getElementById('voteNote');
+
+  // Live-update the counts for every visitor, in real time
+  onValue(boyRef, snap => {
+    document.getElementById('boyCount').textContent = snap.val() || 0;
   });
-  render();
+  onValue(girlRef, snap => {
+    document.getElementById('girlCount').textContent = snap.val() || 0;
+  });
+
+  // One vote per device/browser
+  const hasVoted = () => localStorage.getItem('babyVoteChoice');
+  function lockForm(choice){
+    form.querySelectorAll('input').forEach(i => i.disabled = true);
+    voteBtn.disabled = true;
+    voteBtn.textContent = 'Voted';
+    voteNote.textContent = choice
+      ? `You guessed ${choice === 'boy' ? 'Boy' : 'Girl'} — thanks for voting!`
+      : 'Results update live for everyone';
+  }
+
+  if (hasVoted()) lockForm(hasVoted());
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (hasVoted()) return;
+    const choice = form.guess.value;
+    if (!choice) return;
+    const targetRef = choice === 'boy' ? boyRef : girlRef;
+    runTransaction(targetRef, current => (current || 0) + 1)
+      .then(() => {
+        localStorage.setItem('babyVoteChoice', choice);
+        lockForm(choice);
+      })
+      .catch(() => {
+        voteNote.textContent = "Couldn't submit your vote — try again.";
+      });
+  });
 </script>
 </body>
 </html>
