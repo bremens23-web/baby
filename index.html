@@ -30,34 +30,9 @@
   .divider{border:none;border-top:1px solid var(--line);margin:0;}
 
   /* HERO */
-  .hero{position:relative;padding:70px 32px 60px;overflow:hidden;}
-  .hero-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 220px;align-items:center;gap:24px;}
-  .plane-doodle{width:220px;height:auto;margin-bottom:18px;}
-  .hero h1{
-    font-family:'Rye', serif;
-    font-weight:400;
-    font-size:clamp(1.9rem, 4.2vw, 2.7rem);
-    margin:0 0 6px;
-    line-height:1.2;
-    letter-spacing:.5px;
-  }
-  .hero h1 span{
-    display:block;font-family:'Mrs Saint Delafield', cursive;
-    font-size:clamp(3.1rem, 7vw, 5rem);margin-top:10px;line-height:1;
-  }
-  .passport{
-    width:190px;height:260px;background:#1c2c52;border-radius:10px;
-    box-shadow:0 18px 34px rgba(0,0,0,.18);
-    transform:rotate(6deg);
-    position:relative;justify-self:end;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .passport::after{
-    content:"";position:absolute;right:-26px;top:-10px;width:70px;height:290px;
-    background:repeating-linear-gradient(180deg,#eee 0 14px,#fff 14px 28px);
-    border-radius:6px;transform:rotate(-4deg);z-index:-1;
-  }
-  .passport svg{width:78px;height:78px;}
+  .hero{padding:40px 32px;}
+  .hero-grid{max-width:1100px;margin:0 auto;}
+  .banner{width:100%;height:auto;display:block;}
 
   /* SECTION SPACING */
   section{padding:56px 0;}
@@ -129,8 +104,6 @@
   footer{padding:30px 0 50px;text-align:center;font-size:.8rem;color:#999;}
 
   @media (max-width:720px){
-    .hero-grid{grid-template-columns:1fr;text-align:center;}
-    .passport{justify-self:center;margin-top:24px;}
     .polaroids{grid-template-columns:1fr 1fr;}
     .registry-row{flex-direction:column;}
   }
@@ -140,16 +113,7 @@
 
   <section class="hero">
     <div class="hero-grid">
-      <div>
-        <svg class="plane-doodle" viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 150c30 10 45-6 40-22-4-14-24-10-22 4 3 18 34 24 55 4l70-70" stroke="#111" stroke-width="4" stroke-linecap="round"/>
-          <path d="M150 66l24-24 10 4-16 22 18-2 8 8-26 8-2 18-8-8 2-16-22 16z" fill="#111"/>
-        </svg>
-        <h1>Matthew &amp; Brenda<span>are having a baby</span></h1>
-      </div>
-      <div class="passport">
-        <svg viewBox="0 0 100 100"><ellipse cx="50" cy="60" rx="26" ry="24" fill="#d9b27c"/><circle cx="34" cy="34" r="13" fill="#d9b27c"/><circle cx="66" cy="34" r="13" fill="#d9b27c"/><circle cx="34" cy="34" r="6" fill="#c89a63"/><circle cx="66" cy="34" r="6" fill="#c89a63"/><circle cx="42" cy="55" r="3" fill="#3a2a17"/><circle cx="58" cy="55" r="3" fill="#3a2a17"/><path d="M44 66q6 5 12 0" stroke="#3a2a17" stroke-width="2" fill="none"/><rect x="42" y="72" width="16" height="10" rx="4" fill="#6f9bd6"/></svg>
-      </div>
+      <img class="banner" src="havingababybanner.jpg" alt="Matthew & Brenda are having a baby">
     </div>
   </section>
 
