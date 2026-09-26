@@ -31,6 +31,7 @@
 
   /* HERO */
   .hero{padding:40px 32px;}
+  .hero-grid{max-width:1100px;margin:0 auto;}
   .banner{width:100%;height:auto;display:block;}
 
   /* SECTION SPACING */
@@ -105,6 +106,25 @@
 
   footer{padding:30px 0 50px;text-align:center;font-size:.8rem;color:#999;}
 
+  /* COUNTDOWN */
+  .countdown{text-align:center;}
+  .countdown .due{
+    font-family:'Caveat', cursive;font-size:1.1rem;color:#6b5b33;margin:0 0 14px;
+  }
+  .progress-track{
+    max-width:520px;margin:0 auto;height:22px;border-radius:20px;
+    background:#e9e2d3;border:1px solid #cdbf9c;overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;border-radius:20px 0 0 20px;
+    background:linear-gradient(90deg, var(--tan), var(--blush));
+    width:0%;transition:width .6s ease;
+  }
+  .countdown .weeks{
+    font-family:'Rye', serif;font-size:1.3rem;color:var(--gold);margin:16px 0 0;
+    letter-spacing:.5px;
+  }
+
   @media (max-width:720px){
     .polaroids{grid-template-columns:1fr 1fr;}
     .registry-row{flex-direction:column;}
@@ -116,6 +136,14 @@
   <section class="hero">
     <div class="hero-grid">
       <img class="banner" src="havingababybanner.jpg" alt="Matthew & Brenda are having a baby">
+    </div>
+  </section>
+
+  <section class="countdown">
+    <div class="wrap">
+      <p class="due" id="dueDateText"></p>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <p class="weeks" id="weeksText"></p>
     </div>
   </section>
 
@@ -132,7 +160,7 @@
 
       <div class="polaroids">
         <div class="polaroid">
-          <div class="photo"><img src="8weekultrasound.png" alt="8 week ultrasound"></div>
+          <div class="photo">ultrasound photo</div>
           <div class="caption">8 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
         </div>
         <div class="polaroid">
@@ -193,6 +221,27 @@
   </section>
 
   <footer>Matthew &amp; Brenda are having a baby 💙🤍</footer>
+
+<script>
+  // Pregnancy countdown — auto-calculates from today's date, no manual updates needed
+  const DUE_DATE = new Date('2027-04-01T00:00:00');
+  const TOTAL_DAYS = 280; // standard 40-week pregnancy
+
+  const today = new Date();
+  const msPerDay = 86400000;
+  let daysPregnant = TOTAL_DAYS - Math.ceil((DUE_DATE - today) / msPerDay);
+  daysPregnant = Math.max(0, Math.min(TOTAL_DAYS, daysPregnant));
+
+  const weeks = Math.floor(daysPregnant / 7);
+  const days = daysPregnant % 7;
+  const percent = (daysPregnant / TOTAL_DAYS) * 100;
+
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('weeksText').textContent =
+    daysPregnant >= TOTAL_DAYS ? "Baby's here any day now! 🎉" : `${weeks}w ${days}d pregnant`;
+  document.getElementById('dueDateText').textContent =
+    'Due Date: ' + DUE_DATE.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+</script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
